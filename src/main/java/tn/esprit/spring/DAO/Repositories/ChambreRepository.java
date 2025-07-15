@@ -51,10 +51,5 @@ public interface ChambreRepository extends JpaRepository<Chambre, Long> {
     @Query("select count(c) from Chambre c where c.typeC=?1 and c.bloc.idBloc=?2")
     long select(TypeChambre typeChambre, long idBloc);
 
-    @Query(value = "select count(c) from t_chambre c join t_bloc b " +
-            "on b.id_bloc=c.bloc_id_bloc  where c.type_c=?1 and b.id_bloc=?2"
-            , nativeQuery = true)
-    long selectSQL(TypeChambre typeChambre, long idBloc);
-
 
 }

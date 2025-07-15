@@ -62,9 +62,11 @@ public class FoyerService implements IFoyerService {
         Universite u = universiteRepository.findById(idUniversite).get();
         // Foyer est le child et bloc est le parent
         //On affecte le child au parent
-        for (Bloc bloc : blocs) {
-            bloc.setFoyer(foyer);
-            blocRepository.save(bloc);
+        if (blocs != null) {
+            for (Bloc bloc : blocs) {
+                bloc.setFoyer(foyer);
+                blocRepository.save(bloc);
+            }
         }
         u.setFoyer(f);
         return universiteRepository.save(u).getFoyer();
@@ -83,9 +85,11 @@ public class FoyerService implements IFoyerService {
         //-----------------------------------------
         List<Bloc> blocs = foyer.getBlocs();
         foyer = repo.save(foyer);
-        for (Bloc b : blocs) {
-            b.setFoyer(foyer);
-            blocRepository.save(b);
+        if (blocs != null) {
+            for (Bloc b : blocs) {
+                b.setFoyer(foyer);
+                blocRepository.save(b);
+            }
         }
         return foyer;
     }

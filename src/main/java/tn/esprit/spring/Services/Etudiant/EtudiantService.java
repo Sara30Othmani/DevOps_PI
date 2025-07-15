@@ -7,6 +7,7 @@ import tn.esprit.spring.DAO.Entities.Reservation;
 import tn.esprit.spring.DAO.Repositories.EtudiantRepository;
 import tn.esprit.spring.DAO.Repositories.ReservationRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,6 +54,9 @@ public class EtudiantService implements IEtudiantService {
         Reservation res= reservationRepository.findById(idR).get();
         Etudiant et= repo.getByNomEtAndPrenomEt(nomE,prenomE);
         // 2- Affectation: On affecte le child au parent
+        if (et.getReservations() == null) {
+            et.setReservations(new ArrayList<>());
+        }
         et.getReservations().add(res);
         // 3- Save du parent
         repo.save(et);
@@ -65,6 +69,9 @@ public class EtudiantService implements IEtudiantService {
         Reservation res= reservationRepository.findById(idR).get();
         Etudiant et= repo.getByNomEtAndPrenomEt(nomE,prenomE);
         // 2- Affectation: On desaffecte le child au parent
+        if (et.getReservations() == null) {
+            et.setReservations(new ArrayList<>());
+        }
         et.getReservations().remove(res);
         // 3- Save du parent
         repo.save(et);
