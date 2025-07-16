@@ -25,8 +25,8 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=Foyer -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=http://sonarqube:9000'
-                    }
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=Foyer -Dsonar.login=$SONARQUBE_TOKEN -Dsonar.host.url=http://sonarqube:9000'
+                }
             }
         }
 
@@ -38,4 +38,4 @@ pipeline {
             }
         }
     }
-} 
+}
