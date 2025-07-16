@@ -103,8 +103,8 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>maven-snapchot</id>
-            <url>http://localhost:8081/repository/maven-snapchot/</url>
+            <id>maven-snapshot</id>
+            <url>http://192.168.125.132:8081/repository/maven-snapshot/</url>
         </snapshotRepository>
     </distributionManagement>
 
