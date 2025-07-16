@@ -101,4 +101,11 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>maven-snapchot</id>
+            <url>http://localhost:8081/repository/maven-snapchot/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
