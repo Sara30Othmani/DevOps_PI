@@ -7,8 +7,6 @@ pipeline {
 
     environment {
         SONARQUBE_TOKEN = credentials('sonar-token')
-        NEXUS_USERNAME = credentials('admin')
-        NEXUS_PASSWORD = credentials('admin-123')
     }
 
     stages {
@@ -42,11 +40,9 @@ pipeline {
 
         stage('Deploy to Nexus') {
             steps {
-                sh '''
-                mvn deploy \
-                -Dnexus.username=$NEXUS_USERNAME \
-                -Dnexus.password=$NEXUS_PASSWORD
-                '''
+                withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                    sh 'mvn deploy -Dnexus.username=$NEXUS_USER -Dnexus.password=$NEXUS_PASS --settings settings.xml'
+                }
             }
         }
     }
