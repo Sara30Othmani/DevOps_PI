@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-        stage('Build & Test') {
+        stage('Build, Test & Jacoco Report') {
             steps {
                 sh 'mvn clean verify'
             }
