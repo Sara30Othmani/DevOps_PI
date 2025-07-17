@@ -6,7 +6,9 @@ pipeline {
     }
 
     environment {
-        SONARQUBE_TOKEN = credentials('sonar-token') 
+        SONARQUBE_TOKEN = credentials('sonar-token')
+        NEXUS_USERNAME = credentials('admin')
+        NEXUS_PASSWORD = credentials('admin-123')
     }
 
     stages {
@@ -35,6 +37,16 @@ pipeline {
                 timeout(time: 2, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
+            }
+        }
+
+        stage('Deploy to Nexus') {
+            steps {
+                sh '''
+                mvn deploy \
+                -Dnexus.username=$NEXUS_USERNAME \
+                -Dnexus.password=$NEXUS_PASSWORD
+                '''
             }
         }
     }
