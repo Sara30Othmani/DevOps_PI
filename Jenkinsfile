@@ -52,7 +52,7 @@ pipeline {
                         mvn deploy \
                         -Dnexus.username=$NEXUS_USER \
                         -Dnexus.password=$NEXUS_PASS \
-                        --settings /home/sara_devops/.m2/settings.xml
+                        --settings /var/jenkins_home/.m2/settings.xml
                     '''
                 }
             }
