@@ -7,6 +7,8 @@ pipeline {
 
     environment {
         SONARQUBE_TOKEN = credentials('sonar-token')
+        DOCKER_IMAGE = 'sara325/foyer' 
+
     }
 
     stages {
@@ -67,8 +69,6 @@ EOF
                 }
             }
         }
-    }
-}
 
         stage('Docker Build & Push') {
             steps {
@@ -83,4 +83,5 @@ EOF
                 }
             }
         }
-    
+    }
+}
