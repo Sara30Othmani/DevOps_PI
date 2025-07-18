@@ -18,7 +18,7 @@ pipeline {
 
         stage('Build, Test & Jacoco Report') {
             steps {
-                sh 'mvn clean verify'
+                sh 'mvn clean verify --settings /var/jenkins_home/.m2/settings.xml'
             }
         }
 
@@ -31,7 +31,7 @@ pipeline {
                         -Dsonar.login=$SONARQUBE_TOKEN \
                         -Dsonar.host.url=http://sonarqube:9000 \
                         -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-                        --settings /home/sara_devops/.m2/settings.xml
+                        --settings /var/jenkins_home/.m2/settings.xml
                     '''
                 }
             }
