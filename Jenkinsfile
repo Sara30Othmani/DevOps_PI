@@ -65,7 +65,6 @@ EOF
             steps {
                 script {
                     echo "Building Docker image..."
-                    sh 'chmod 666 /var/run/docker.sock'
 
                     def dockerImage = docker.build("${DOCKER_IMAGE}:v1")
 
