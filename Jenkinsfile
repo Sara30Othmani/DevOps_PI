@@ -62,16 +62,21 @@ EOF
             }
         }
 
-        stage('Docker Build & Push') {
+        stage('Build Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-
-                        docker build -t $DOCKER_IMAGE:latest .
-
-                        docker push $DOCKER_IMAGE:latest
-                    '''
+                dir(SOURCE_CODE_PATH) {
+                    script {
+                        echo "Building Docker image..."
+                        sh 'chmod 666 /var/run/docker.sock'
+                        
+                        // Build the Docker image
+                        def dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+                        
+                        // Also tag as latest
+                        sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest"
+                        
+                        echo "Docker image built successfully: ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                    }
                 }
             }
         }
