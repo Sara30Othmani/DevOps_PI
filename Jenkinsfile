@@ -8,7 +8,6 @@ pipeline {
     environment {
         SONARQUBE_TOKEN = credentials('sonar-token')
         DOCKER_IMAGE = 'sara325/foyer' 
-
     }
 
     stages {
@@ -64,19 +63,15 @@ EOF
 
         stage('Build Docker Image') {
             steps {
-                dir(SOURCE_CODE_PATH) {
-                    script {
-                        echo "Building Docker image..."
-                        sh 'chmod 666 /var/run/docker.sock'
-                        
-                        // Build the Docker image
-                        def dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
-                        
-                        // Also tag as latest
-                        sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest"
-                        
-                        echo "Docker image built successfully: ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-                    }
+                script {
+                    echo "Building Docker image..."
+                    sh 'chmod 666 /var/run/docker.sock'
+
+                    def dockerImage = docker.build("${DOCKER_IMAGE}:v1")
+
+                    sh "docker tag ${DOCKER_IMAGE}:v1 ${DOCKER_IMAGE}:latest"
+
+                    echo "Docker image built successfully: ${DOCKER_IMAGE}"
                 }
             }
         }
